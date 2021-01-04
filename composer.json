@@ -1,0 +1,30 @@
+{
+    "name": "dizatec/attachment",
+    "type": "library",
+    "description": "",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vahid Ashourzadeh",
+            "email": "v.ashourzadeh@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "7.1.*|7.2.*|7.3.*|7.4.*",
+        "laravel/framework": "7.*|8.*",
+        "plank/laravel-mediable": "5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dizatec\\Attachment\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Dizatec\\Attachment\\DizatecAttachmentServiceProvider"
+            ]
+        }
+    }
+}
