@@ -13,17 +13,18 @@
     "require": {
         "php": "7.1.*|7.2.*|7.3.*|7.4.*",
         "laravel/framework": "7.*|8.*",
-        "plank/laravel-mediable": "5.*"
+        "plank/laravel-mediable": "5.*",
+        "morilog/jalali": "3.*"
     },
     "autoload": {
         "psr-4": {
-            "Dizatec\\Attachment\\": "src/"
+            "Dizatech\\Attachment\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Dizatec\\Attachment\\DizatecAttachmentServiceProvider"
+                "Dizatech\\Attachment\\DizatechAttachmentServiceProvider"
             ]
         }
     }
