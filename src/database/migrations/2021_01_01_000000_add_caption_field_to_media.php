@@ -14,7 +14,7 @@ class AddCaptionFieldToMedia extends Migration
     public function up()
     {
         Schema::table('media', function (Blueprint $table) {
-            $table->string('caption', 512)->after('size');
+            $table->string('caption', 512)->nullable()->after('size');
         });
     }
 
