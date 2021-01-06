@@ -27,21 +27,6 @@ php artisan vendor:publish --tag=dizatech_attachment
 
 ```
 
-#### Set npm files, the npm package is [here](https://www.npmjs.com/package/dizatech-attachment)
-
-```
-
-JS file:
-Add require('dizatech-attachment/js/dizatech-attachment'); to resources/js/app.js
-
-SCSS file:
-Add @import "~dizatech-attachment/scss/dizatech-attachment"; to resources/scss/app.scss
-
-Run command:
-npm run dev
-
-```
-
 #### Create a private disk in config/filesystems.php
 
 ```
@@ -51,7 +36,7 @@ npm run dev
         'driver' => 'local',
         'root' => storage_path('app/private'),
         'visibility' => 'private'
-    ],
+        ],
 ],
 
 ```
@@ -72,11 +57,28 @@ npm run dev
 
 ```
 
+#### Create a symbolic link from public disk
+
+```
+
+php artisan storage:link
+
+```
+
 #### Migrate tables, to add media and mediable tables to database
 
 ```
 
 php artisan migrate
+
+```
+
+#### Check you're blade file that exits csrf-token meta tag
+
+```
+
+<!-- CSRF Token -->
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 ```
 
@@ -112,11 +114,29 @@ Notice: We can use any attribute name in component.
 
 ```
 
-#### Create a symbolic link from public disk
+#### Check you're composer.json that installed [laravel/ui](https://github.com/laravel/ui) package
 
 ```
 
-php artisan storage:link
+If not installed, run this commands:
+    1. composer require laravel/ui
+    2. php artisan ui bootstrap
+
+
+```
+
+#### Set npm files, the npm package is [here](https://www.npmjs.com/package/dizatech-attachment)
+
+```
+
+JS file:
+Add require('dizatech-attachment/js/dizatech-attachment'); to resources/js/app.js
+
+SCSS file:
+Add @import "~dizatech-attachment/scss/dizatech-attachment"; to resources/scss/app.scss
+
+Run command:
+npm run dev
 
 ```
 

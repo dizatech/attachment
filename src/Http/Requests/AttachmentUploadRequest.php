@@ -25,8 +25,8 @@ class AttachmentUploadRequest extends FormRequest
     {
         return [
             'file' => (request('file_type') == 'image')
-                ? ['required', 'mimes:' . config('dizatech_attachment.image_valid_mimes'), 'max:' . (config('dizatech_attachment.image_maximum_size') * 1024 * 1024)]
-                : ['required', 'mimes:' . config('dizatech_attachment.attachment_valid_mimes'), 'max:' . (config('dizatech_attachment.attachment_maximum_size') * 1024 * 1024)],
+                ? ['required', 'mimes:' . config('dizatech_attachment.image_valid_mimes'), 'max:' . (config('dizatech_attachment.image_maximum_size') * 1024)]
+                : ['required', 'mimes:' . config('dizatech_attachment.attachment_valid_mimes'), 'max:' . (config('dizatech_attachment.attachment_maximum_size') * 1024)],
             'file_type' => ['required', 'in:image,attachment']
         ];
     }
