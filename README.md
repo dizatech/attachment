@@ -11,11 +11,11 @@ A laravel package for manage you're uploads (images and files), that use ajax an
 #### Installation
 
 ```
-PHP Pacckage:
+PHP Package:
 composer require dizatech/attachment
 
 NPM Package:
-npm i dizatech-attachmant
+npm i dizatech-attachment
 ```
 
 #### Publish Config file
