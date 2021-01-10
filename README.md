@@ -82,6 +82,11 @@ php artisan migrate
 
 ```
 
+#### Check you're php extensions that installed gd library driver
+
+If you use from xampp or wamp, it's installed by default but on linux maybe not installed.
+If you want to use imagick extension, reed the document [here](https://laravel-mediable.readthedocs.io/en/latest/variants.html)
+
 #### Use components in blade pages
 
 ```
@@ -90,13 +95,13 @@ If we want to upload a image in create page:
 <x-attachment type="image" multiple="false" page="create" name="feature" label="تصویر شاخص"></x-attachment>
 
 If we want to upload many images in create page for gallery:
-<x-attachment type="image" multiple="true" page="create" name="features" label="تصاویر گالری"></x-attachment>
+<x-attachment type="image" multiple="true" page="create" name="galleries" label="تصاویر گالری"></x-attachment>
 
 If we want to show uploaded image in edit page and remove for change image:
-<x-attachment type="image" multiple="false" page="edit" name="feature" label="تصویر شاخص"></x-attachment>
+<x-attachment type="image" multiple="false" page="edit" name="feature" label="تصویر شاخص" data="{{ $post->getMedia('feature')->pluck('id') }}"></x-attachment>
 
 If we want to show uploaded images in edit page and remove for change images:
-<x-attachment type="image" multiple="true" page="edit" name="features" label="تصاویر گالری"></x-attachment>
+<x-attachment type="image" multiple="true" page="edit" name="galleries" label="تصاویر گالری" data="{{ $post->getMedia('galleries')->pluck('id') }}"></x-attachment>
 
 If we want to upload a attachment file in create page:
 <x-attachment type="attachment" multiple="false" page="create" name="attachment" label="فایل ضمیمه"></x-attachment>
@@ -105,10 +110,10 @@ If we want to upload many attachment files in create page for attachment:
 <x-attachment type="attachment" multiple="true" page="create" name="attachments" label="فایل‌های ضمیمه"></x-attachment>
 
 If we want to show uploaded attachment file in edit page and remove for change attachment:
-<x-attachment type="attachment" multiple="false" page="edit" name="attachment" label="فایل ضمیمه"></x-attachment>
+<x-attachment type="attachment" multiple="false" page="edit" name="attachment" label="فایل ضمیمه" data="{{ $post->getMedia('attachment')->pluck('id') }}"></x-attachment>
 
 If we want to show uploaded attachment files in edit page and remove for change attachments:
-<x-attachment type="attachment" multiple="true" page="edit" name="attachments" label="فایل‌های ضمیمه"></x-attachment>
+<x-attachment type="attachment" multiple="true" page="edit" name="attachments" label="فایل‌های ضمیمه" data="{{ $post->getMedia('attachments')->pluck('id') }}"></x-attachment>
 
 Notice: We can use any attribute name in component.
 
@@ -119,8 +124,8 @@ Notice: We can use any attribute name in component.
 ```
 
 If not installed, run this commands:
-    1. composer require laravel/ui
-    2. php artisan ui bootstrap
+    - composer require laravel/ui
+    - php artisan ui bootstrap
 
 
 ```
@@ -149,7 +154,10 @@ npm run dev
 return [
     'image_valid_mimes' => 'jpeg,png,jpg,gif',
     'image_maximum_size' => 5, // Megabyte
-    'image_variant_list' => ['thumbnail'], // The first variant of list is main variant and we use it for thumbnail
+    // The first variant of list is main variant and we use it for thumbnail,
+    // and if we want to define a new variant read palnk/laravel-mediable document
+    // and after define variant in Service Provider. add the variant name to this array.
+    'image_variant_list' => ['thumbnail'], 
 
     'attachment_valid_mimes' => 'pdf,doc,docx,xls,xlsx,jpeg,jpg,png,bmp',
     'attachment_maximum_size' => 10, // Megabyte
@@ -202,17 +210,21 @@ public function store(Request $request, Post $post)
     $post->syncMedia($request->galleries, $gallery_tag);
 
     // Update Media model with feature image caption
-    foreach ($request->feature as $index => $feature) {
-        Media::query()->whereId($feature)->update([
-            'caption' => $request->feature_caption[$index] ?? null
-        ]);
+    if($request->has('feature')) {
+        foreach ($request->feature as $index => $feature) {
+            Media::query()->whereId($feature)->update([
+                'caption' => $request->feature_caption[$index] ?? null
+            ]);
+        }
     }
 
     // Update Media model with gallery images captions
-    foreach ($request->galleries as $index => $gallery) {
-        Media::query()->whereId($gallery)->update([
-            'caption' => $request->galleries_caption[$index] ?? null
-        ]);
+    if($request->has('galleries')) {
+        foreach ($request->galleries as $index => $gallery) {
+            Media::query()->whereId($gallery)->update([
+                'caption' => $request->galleries_caption[$index] ?? null
+            ]);
+        }
     }
 }
 
