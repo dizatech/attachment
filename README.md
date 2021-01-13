@@ -86,7 +86,7 @@ php artisan migrate
 #### Check you're php extensions that installed gd library driver
 
 If you use from xampp or wamp, it's installed by default but on linux maybe not installed.
-If you want to use imagick extension, reed the document [here](https://laravel-mediable.readthedocs.io/en/latest/variants.html)
+If you want to use imagick extension, read the document [here](https://laravel-mediable.readthedocs.io/en/latest/variants.html)
 
 #### Use components in blade pages
 
