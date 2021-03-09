@@ -105,6 +105,18 @@ If we want to show uploaded image in edit page and remove for change image:
 If we want to show uploaded images in edit page and remove for change images:
 <x-attachment type="image" multiple="true" page="edit" name="galleries" label="تصاویر گالری" data="{{ $post->getMedia('galleries')->pluck('id') }}"></x-attachment>
 
+If we want to upload a video in create page:
+<x-attachment type="video" multiple="false" page="create" name="video" label="ویدیو"></x-attachment>
+
+If we want to upload many videos in create page:
+<x-attachment type="video" multiple="true" page="create" name="videos" label="ویدیو‌ها"></x-attachment>
+
+If we want to show uploaded video in edit page and remove for change video:
+<x-attachment type="video" multiple="false" page="edit" name="video" label="ویدیو" data="{{ $post->getMedia('video')->pluck('id') }}"></x-attachment>
+
+If we want to show uploaded videos in edit page and remove for change videos:
+<x-attachment type="video" multiple="true" page="edit" name="videos" label="ویدیو‌ها" data="{{ $post->getMedia('videos')->pluck('id') }}"></x-attachment>
+
 If we want to upload a attachment file in create page:
 <x-attachment type="attachment" multiple="false" page="create" name="attachment" label="فایل ضمیمه"></x-attachment>
 
