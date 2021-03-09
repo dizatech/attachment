@@ -25,7 +25,7 @@ class AttachmentRemoveRequest extends FormRequest
     {
         return [
             'object_id' => ['required', 'exists:media,id'],
-            'object_type' => ['required', 'in:image,attachment']
+            'object_type' => ['required', 'in:image,attachment,video']
         ];
     }
 

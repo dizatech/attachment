@@ -109,5 +109,16 @@ class Attachment extends Component
             return view('dizatech_attachment::components.attachment_single_edit', ['data' => $this->data]);
         if($this->type == 'attachment' && $this->multiple == 'true' && $this->page == 'edit')
             return view('dizatech_attachment::components.attachment_multiple_edit', ['data' => $this->data]);
+
+        // Render video type of components
+        if($this->type == 'video' && $this->multiple == 'false' && $this->page == 'create')
+            return view('dizatech_attachment::components.video_single_create');
+        if($this->type == 'video' && $this->multiple == 'true' && $this->page == 'create')
+            return view('dizatech_attachment::components.video_multiple_create');
+        if($this->type == 'image' && $this->multiple == 'false' && $this->page == 'edit')
+            return view('dizatech_attachment::components.video_single_edit', ['data' => $this->data]);
+        if($this->type == 'video' && $this->multiple == 'true' && $this->page == 'edit')
+            return view('dizatech_attachment::components.video_multiple_edit', ['data' => $this->data]);
+
     }
 }

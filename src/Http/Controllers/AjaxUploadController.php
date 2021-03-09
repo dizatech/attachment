@@ -16,7 +16,9 @@ class AjaxUploadController extends Controller
 {
     public function upload( AttachmentUploadRequest  $request )
     {
-        ( $request->has('file_type') && $request->file_type == 'image' ) ? $disk = 'public' : $disk = 'private';
+        ( $request->has('file_type') && ($request->file_type == 'image' || $request->file_type == 'video') )
+            ? $disk = 'public'
+            : $disk = 'private';
 
         (config('dizatech_attachment.hash_file_names'))
             ? $media = MediaUploader::fromSource($request->file)
@@ -39,6 +41,8 @@ class AjaxUploadController extends Controller
                 $variantMedia[] = ImageManipulator::createImageVariant($media, $variant);
             }
             $response->thumbnail = Storage::disk($disk)->url($variantMedia[0]->getDiskPath());
+        } elseif( $request->file_type == 'video' ) {
+            $response->file_url = Storage::disk($disk)->url($media->getDiskPath());
         } elseif( $request->file_type == 'attachment' ) {
             $response->file_url = URL::temporarySignedRoute(
                 'download.attachment',
@@ -59,6 +63,9 @@ class AjaxUploadController extends Controller
                     $media->findVariant($variant)->delete();
                 }
             }
+            Storage::disk('public')->delete($media->getDiskPath());
+            $media->delete();
+        } elseif($request->object_type == 'video') {
             Storage::disk('public')->delete($media->getDiskPath());
             $media->delete();
         } elseif($request->object_type == 'attachment') {

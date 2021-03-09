@@ -5,6 +5,9 @@ return [
     'image_maximum_size' => 5, // Megabyte
     'image_variant_list' => ['thumbnail'], // The first variant of list is main variant and we use it for thumbnail
 
+    'video_valid_mimes' => 'mp4',
+    'video_maximum_size' => 200, // Megabyte
+
     'attachment_valid_mimes' => 'pdf,doc,docx,xls,xlsx,jpeg,jpg,png,bmp',
     'attachment_maximum_size' => 10, // Megabyte
     'attachment_download_link_expire_time' => 6, // Hours
