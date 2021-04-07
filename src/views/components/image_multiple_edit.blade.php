@@ -16,7 +16,7 @@
                 <label class="custom-file-label" for="">بارگذاری تصویر</label>
 
                 @error( $name )
-                <span class="invalid-feedback" role="alert">
+                    <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror

@@ -32,6 +32,14 @@
                         </a>
                         <input class="uploaded_file_path" type="hidden" name="{{ $name . "[]" }}" value="{{ $last_video->getKey() }}">
                     </div>
+                    <div class="file_caption rtl my-1">
+                        <div class="row">
+                            <div class="col">
+                                <label>عنوان</label>
+                                <input type="text" class="form-control" name="{{ $name . "_caption[]" }}" value="{{ $last_video->caption }}">
+                            </div>
+                        </div>
+                    </div>
                     <span class="delete_file"><i class="fa fa-times"></i></span>
                 </div>
             @endforeach
