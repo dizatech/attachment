@@ -95,9 +95,13 @@ If you want to use imagick extension, read the document [here](https://laravel-m
 
 If we want to upload a image in create page:
 <x-attachment type="image" multiple="false" page="create" name="feature" label="تصویر شاخص"></x-attachment>
-and with custom validation that you can set it on all of types (image, video and attachment)
-<x-attachment type="image" multiple="false" page="create" name="feature" label="تصویر شاخص"
-              validation="['required', 'mimes:png,jpg', 'dimensions:ratio=1/1,width=600,height=600']"></x-attachment>
+
+And with custom validation that you can set it on all of types (image, video and attachment)
+<x-attachment type="image" 
+              multiple="false" 
+              page="create" name="feature" label="تصویر شاخص"
+              validation="['required', 'mimes:png,jpg', 'dimensions:ratio=1/1,width=600,height=600']"
+></x-attachment>
 
 If we want to upload many images in create page for gallery:
 <x-attachment type="image" multiple="true" page="create" name="galleries" label="تصاویر گالری"></x-attachment>
