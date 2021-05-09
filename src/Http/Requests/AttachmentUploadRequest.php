@@ -23,12 +23,25 @@ class AttachmentUploadRequest extends FormRequest
      */
     public function rules()
     {
+        // Convert string of validations to array
+        $preValidation = [];
+        if(request()->has('validation')) {
+            preg_match_all('/[\'"](.*?)[\'"]/', request('validation'), $array);
+            $preValidation = $array[1];
+        }
+        // Prepare validation
+        if(!empty($preValidation)) {
+            $validation = $preValidation;
+        } else {
+            $validation =
+                (request('file_type') == 'image')
+                    ? ['required', 'mimes:' . config('dizatech_attachment.image_valid_mimes'), 'max:' . (config('dizatech_attachment.image_maximum_size') * 1024)]
+                    : ( (request('file_type') == 'video')
+                    ? ['required', 'mimes:' . config('dizatech_attachment.video_valid_mimes'), 'max:' . (config('dizatech_attachment.video_maximum_size') * 1024)]
+                    : ['required', 'mimes:' . config('dizatech_attachment.attachment_valid_mimes'), 'max:' . (config('dizatech_attachment.attachment_maximum_size') * 1024)] );
+        }
         return [
-            'file' => (request('file_type') == 'image')
-                ? ['required', 'mimes:' . config('dizatech_attachment.image_valid_mimes'), 'max:' . (config('dizatech_attachment.image_maximum_size') * 1024)]
-                : ( (request('file_type') == 'video')
-                ? ['required', 'mimes:' . config('dizatech_attachment.video_valid_mimes'), 'max:' . (config('dizatech_attachment.video_maximum_size') * 1024)]
-                : ['required', 'mimes:' . config('dizatech_attachment.attachment_valid_mimes'), 'max:' . (config('dizatech_attachment.attachment_maximum_size') * 1024)] ),
+            'file' => $validation,
             'file_type' => ['required', 'in:image,attachment,video']
         ];
     }

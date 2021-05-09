@@ -56,6 +56,12 @@ class Attachment extends Component
     public $data;
 
     /**
+     * The custom validation for you
+     * @var
+     */
+    public $validation;
+
+    /**
      * Create a new component instance.
      *
      * @param $type
@@ -64,8 +70,9 @@ class Attachment extends Component
      * @param $name
      * @param $label
      * @param null $data
+     * @param string $validation
      */
-    public function __construct($type, $multiple ,$page ,$name, $label, $data = null)
+    public function __construct($type, $multiple ,$page ,$name, $label, $data = null, $validation = '')
     {
         // Set input variables to generate a component
         $this->type = $type;
@@ -77,6 +84,8 @@ class Attachment extends Component
         // Convert string input data to array, for edit pages
         preg_match_all('!\d+!', $data, $array);
         $this->data = $array[0];
+
+        $this->validation = $validation;
 
         // Set url
         $this->upload_url = route('dizatech_upload');

@@ -20,6 +20,15 @@
 
             </div>
         </div>
+
+        @if(! is_null($validation))
+            <input type="hidden"
+                   class="custom_validation"
+                   name="validation"
+                   value="{{ $validation }}"
+            >
+        @endif
+
     </div>
     <div class="col-md-12 video_files">
         @if( old($name) )
