@@ -9,6 +9,7 @@
                        data-upload="{{ $upload_url }}"
                        data-remove="{{ $remove_url }}"
                        data-name="{{ $name }}"
+                       @if($disabled) disabled @endif
                 >
                 <label class="custom-file-label" for="">بارگذاری فایل ضمیمه</label>
 

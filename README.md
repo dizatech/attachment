@@ -103,6 +103,13 @@ And with custom validation that you can set it on all of types (image, video and
               validation="['required', 'mimes:png,jpg', 'dimensions:ratio=1/1,width=600,height=600']"
 ></x-attachment>
 
+And if you want to disable a input, use disabled="true"
+<x-attachment type="image" 
+              multiple="false" 
+              page="create" name="feature" label="تصویر شاخص"
+              disabled="true"
+></x-attachment>disable="true"
+
 If we want to upload many images in create page for gallery:
 <x-attachment type="image" multiple="true" page="create" name="galleries" label="تصاویر گالری"></x-attachment>
 

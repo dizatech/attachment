@@ -62,6 +62,12 @@ class Attachment extends Component
     public $validation;
 
     /**
+     * A flag to disabled a input
+     * @var
+     */
+    public $disabled;
+
+    /**
      * Create a new component instance.
      *
      * @param $type
@@ -71,8 +77,9 @@ class Attachment extends Component
      * @param $label
      * @param null $data
      * @param string $validation
+     * @param bool $disabled
      */
-    public function __construct($type, $multiple ,$page ,$name, $label, $data = null, $validation = '')
+    public function __construct($type, $multiple ,$page ,$name, $label, $data = null, $validation = '', $disabled = false)
     {
         // Set input variables to generate a component
         $this->type = $type;
@@ -86,6 +93,8 @@ class Attachment extends Component
         $this->data = $array[0];
 
         $this->validation = $validation;
+
+        $this->disabled = $disabled;
 
         // Set url
         $this->upload_url = route('dizatech_upload');

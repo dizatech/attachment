@@ -12,6 +12,7 @@
                     data-remove="{{ $remove_url }}"
                     data-name="{{ $name }}"
                     data-caption=""
+                    @if($disabled) disabled @endif
                 >
 
                 <label class="custom-file-label">بارگذاری تصویر</label>
