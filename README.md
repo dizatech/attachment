@@ -108,7 +108,7 @@ And if you want to disable a input, use disabled="true"
               multiple="false" 
               page="create" name="feature" label="تصویر شاخص"
               disabled="true"
-></x-attachment>disable="true"
+></x-attachment>
 
 If we want to upload many images in create page for gallery:
 <x-attachment type="image" multiple="true" page="create" name="galleries" label="تصاویر گالری"></x-attachment>
