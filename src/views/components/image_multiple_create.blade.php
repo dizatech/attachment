@@ -12,7 +12,7 @@
                     data-name="{{ $name }}"
                     data-caption=""
                     multiple="multiple"
-                    @if($disabled) disabled @endif
+                    @if($disabled == 'disabled') disabled @endif
                 >
                 <label class="custom-file-label" for="">بارگذاری تصویر</label>
 

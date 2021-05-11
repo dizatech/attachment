@@ -79,7 +79,7 @@ class Attachment extends Component
      * @param string $validation
      * @param bool $disabled
      */
-    public function __construct($type, $multiple ,$page ,$name, $label, $data = null, $validation = '', $disabled = false)
+    public function __construct($type, $multiple ,$page ,$name, $label, $data = null, $validation = '', $disabled = '')
     {
         // Set input variables to generate a component
         $this->type = $type;
