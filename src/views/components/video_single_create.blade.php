@@ -1,7 +1,17 @@
 <div class="row videos">
     <div class="col-md-12">
         <div class="form-group">
-            <label for=""><strong>{{ $label }}</strong></label>
+            <label for="">
+                @if($required == 'required')
+                    <strong class="text-danger">*</strong>
+                @endif
+                <strong>{{ $label }}</strong>
+                @if($tooltipTitle != null)
+                    <span class="text-info" data-toggle="tooltip" data-placement="{{ $tooltipPlacement ?? 'top' }}" title="{{ $tooltipTitle }}">
+                        <i class="fa fa-info-circle"></i>
+                    </span>
+                @endif
+            </label>
             <div class="custom-file">
 
                 <input type="file"
@@ -18,6 +28,10 @@
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
+
+                <span class="invalid-feedback d-none" role="alert">
+                    <strong></strong>
+                </span>
 
             </div>
         </div>

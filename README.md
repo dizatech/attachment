@@ -110,6 +110,25 @@ And if you want to disable a input, use disabled="disabled"
               disabled="disabled"
 ></x-attachment>
 
+If you want to add a * before label use required="required" property
+<x-attachment type="image" 
+              multiple="false" 
+              page="create" name="feature" label="تصویر شاخص"
+              disabled="disabled"
+              required="required"  
+></x-attachment>
+
+If you want to add a tooltip after label use tooltip-title="Tooltip title" 
+and for change placement use from tooltip-placement="bottom" property
+<x-attachment type="image" 
+              multiple="false" 
+              page="create" name="feature" label="تصویر شاخص"
+              disabled="disabled"
+              required="required"
+              tooltip-title="Tooltip title"
+              tooltip-placement="bottom"
+></x-attachment>
+
 If we want to upload many images in create page for gallery:
 <x-attachment type="image" multiple="true" page="create" name="galleries" label="تصاویر گالری"></x-attachment>
 

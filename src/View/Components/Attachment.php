@@ -68,6 +68,25 @@ class Attachment extends Component
     public $disabled;
 
     /**
+     * The tooltips title for show after label of input
+     * @var
+     */
+    public $tooltipTitle;
+
+    /**
+     * The tooltips placement (top, bottom, left, right)
+     * @var
+     */
+    public $tooltipPlacement;
+
+
+    /**
+     * A flag to add * before label of input
+     * @var
+     */
+    public $required;
+
+    /**
      * Create a new component instance.
      *
      * @param $type
@@ -78,8 +97,11 @@ class Attachment extends Component
      * @param null $data
      * @param string $validation
      * @param bool $disabled
+     * @param null $required
+     * @param null $tooltipTitle
+     * @param null $tooltipPlacement
      */
-    public function __construct($type, $multiple ,$page ,$name, $label, $data = null, $validation = '', $disabled = '')
+    public function __construct($type, $multiple ,$page ,$name, $label, $data = null, $validation = '', $disabled = '', $required = null, $tooltipTitle = null, $tooltipPlacement = null)
     {
         // Set input variables to generate a component
         $this->type = $type;
@@ -95,6 +117,11 @@ class Attachment extends Component
         $this->validation = $validation;
 
         $this->disabled = $disabled;
+
+        $this->required = $required;
+
+        $this->tooltipTitle = $tooltipTitle;
+        $this->tooltipPlacement = $tooltipPlacement;
 
         // Set url
         $this->upload_url = route('dizatech_upload');

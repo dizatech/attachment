@@ -1,7 +1,17 @@
 <div class="row attachments">
     <div class="col-md-12">
         <div class="form-group">
-            <label for=""><strong>{{ $label }}</strong></label>
+            <label for="">
+                @if($required == 'required')
+                    <strong class="text-danger">*</strong>
+                @endif
+                <strong>{{ $label }}</strong>
+                @if($tooltipTitle != null)
+                    <span class="text-info" data-toggle="tooltip" data-placement="{{ $tooltipPlacement ?? 'top' }}" title="{{ $tooltipTitle }}">
+                        <i class="fa fa-info-circle"></i>
+                    </span>
+                @endif
+            </label>
             <div class="custom-file">
 
                 <input type="file"
@@ -10,7 +20,7 @@
                        data-remove="{{ $remove_url }}"
                        data-name="{{ $name }}"
                        multiple="multiple"
-                       @if($disabled == 'disabled') disabled @endif
+                       @if($disabled) disabled @endif
                 >
                 <label class="custom-file-label" for="">بارگذاری فایل ضمیمه</label>
 
@@ -19,6 +29,10 @@
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
+
+                <span class="invalid-feedback d-none" role="alert">
+                    <strong></strong>
+                </span>
 
             </div>
         </div>
