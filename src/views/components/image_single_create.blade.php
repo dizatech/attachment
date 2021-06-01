@@ -47,6 +47,13 @@
                    value="{{ $validation }}"
             >
         @endif
+        @if(! is_null($disk))
+            <input type="hidden"
+                   class="custom_disk"
+                   name="disk"
+                   value="{{ $disk }}"
+            >
+        @endif
 
     </div>
     <div class="col-md-12 gallery_files">

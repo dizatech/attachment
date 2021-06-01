@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Intervention\Image\Image;
 use Plank\Mediable\Facades\ImageManipulator;
 use Plank\Mediable\ImageManipulation;
+use Illuminate\Support\Facades\Validator;
 
 class DizatechAttachmentServiceProvider extends ServiceProvider
 {
@@ -46,5 +47,29 @@ class DizatechAttachmentServiceProvider extends ServiceProvider
                 $image->fit(200, 200);
             })->outputPngFormat()
         );
+
+        Validator::extend('attachment_check_disk_is_public', function ($attribute, $value, $parameters, $validator) {
+            if(
+                request()->has('disk')
+                &&
+                (request('file_type') == 'image' || request('file_type') == 'video')
+                &&
+                config('filesystems.disks.' . request('disk') . '.visibility') == 'private'
+            ) {
+                return false;
+            }
+            return true;
+        }, config('dizatech_attachment.check_disk_is_public_message'));
+
+        Validator::extend('attachment_disk_not_found', function ($attribute, $value, $parameters, $validator) {
+            if(
+                request()->has('disk')
+                &&
+                ! in_array(request('disk'), array_keys(config('filesystems.disks')))
+            ) {
+                return false;
+            }
+            return true;
+        }, config('dizatech_attachment.disk_not_found_message'));
     }
 }

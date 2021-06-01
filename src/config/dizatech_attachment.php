@@ -18,6 +18,9 @@ return [
     'remove_file_success_message' => 'فایل با موفقیت حذف شد.',
     'remove_file_failed_message' => 'فایل مورد نظر پیدا نشد.',
 
+    'check_disk_is_public_message' => 'برای نوع تصویر و ویدیو نمی‌توانید دیسک‌های خصوصی انتخاب نمایید.',
+    'disk_not_found_message' => 'دیسک انتخابی شما در سامانه وجود ندارد.',
+
     'hash_file_names' => false,
 
     'set_middleware_to_upload_url' => ['web'],

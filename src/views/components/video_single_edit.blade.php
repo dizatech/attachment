@@ -43,6 +43,13 @@
                    value="{{ $validation }}"
             >
         @endif
+        @if(! is_null($disk))
+            <input type="hidden"
+                   class="custom_disk"
+                   name="disk"
+                   value="{{ $disk }}"
+            >
+        @endif
 
     </div>
     <div class="col-md-12 video_files">
@@ -51,7 +58,16 @@
                 @php $last_video = \Plank\Mediable\Media::query()->find($old_video); @endphp
                 <div class="video_file_upload mb-2">
                     <div class="file_info">
-                        <a href="{{ $last_video->getUrl() }}">
+                        @if(in_array(config('filesystems.disks.' . $last_video->disk . '.driver'), ['ftp', 's3', 'sftp']))
+                            @php
+                                $file_url = config('filesystems.disks.' . $last_video->disk . '.protocol')  . '://' . config('filesystems.disks.' . $last_video->disk . '.host') . '/' .  $last_video->getDiskPath();
+                            @endphp
+                        @else
+                            @php
+                                $file_url = $last_video->getUrl();
+                            @endphp
+                        @endif
+                        <a href="{{ $file_url }}">
                             <span class="file_name">{{ $last_video->basename }}</span>
                         </a>
                         <input class="uploaded_file_path" type="hidden" name="{{ $name . "[]" }}" value="{{ $last_video->getKey() }}">

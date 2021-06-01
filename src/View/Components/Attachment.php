@@ -87,6 +87,12 @@ class Attachment extends Component
     public $required;
 
     /**
+     * Choose a disk for upload files
+     * @var
+     */
+    public $disk;
+
+    /**
      * Create a new component instance.
      *
      * @param $type
@@ -95,13 +101,14 @@ class Attachment extends Component
      * @param $name
      * @param $label
      * @param null $data
-     * @param string $validation
+     * @param null $validation
      * @param bool $disabled
      * @param null $required
      * @param null $tooltipTitle
      * @param null $tooltipPlacement
+     * @param null $disk
      */
-    public function __construct($type, $multiple ,$page ,$name, $label, $data = null, $validation = '', $disabled = '', $required = null, $tooltipTitle = null, $tooltipPlacement = null)
+    public function __construct($type, $multiple ,$page ,$name, $label, $data = null, $validation = null, $disabled = '', $required = null, $tooltipTitle = null, $tooltipPlacement = null, $disk = null)
     {
         // Set input variables to generate a component
         $this->type = $type;
@@ -122,6 +129,8 @@ class Attachment extends Component
 
         $this->tooltipTitle = $tooltipTitle;
         $this->tooltipPlacement = $tooltipPlacement;
+
+        $this->disk = $disk;
 
         // Set url
         $this->upload_url = route('dizatech_upload');
