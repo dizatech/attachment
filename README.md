@@ -197,8 +197,14 @@ How to use a custom disk for upload, (e.g) a ftp disk or custom local disk:
             // 'ssl' => true,
             // 'timeout' => 30,
         ],
+
+    2- add this lines to .env file
     
-    2- add this disk name to /config/mediable.php
+        FTP1_HOST=server1.domain.com
+        FTP1_USERNAME=your_username
+        FTP1_PASSWORD=your_password
+    
+    3- add this disk name to /config/mediable.php
 
         'allowed_disks' => [
             'public',
@@ -206,7 +212,7 @@ How to use a custom disk for upload, (e.g) a ftp disk or custom local disk:
             'disk_name'
         ],
 
-    3- use in blade
+    4- use in blade
     
         <x-attachment type="image" 
                 multiple="false" 
