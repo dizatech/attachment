@@ -89,8 +89,17 @@ php artisan migrate
 If you use from xampp or wamp, it's installed by default but on linux maybe not installed.
 If you want to use imagick extension, read the document [here](https://laravel-mediable.readthedocs.io/en/latest/variants.html)
 
-#### Use components in blade pages
-
+#### List of Properties and Use components in blade pages (e.g)
+- type="image | video | attachment"
+- multiple="false | true" 
+- page="create | edit"
+- name="string"
+- label="string"
+- validation="['mimes:png,jpg', 'dimensions:ratio=1/1,min_width=600,min_height=600']"
+- disabled="disabled"
+- required="required"  
+- tooltip-title="tooltip title" and tooltip-placement="bottom | top | left | right"
+- disk="public | private | ftp | ..."               
 ```
 
 If we want to upload a image in create page:
@@ -137,7 +146,8 @@ If we want to show uploaded image in edit page and remove for change image:
 
 If we want to show uploaded images in edit page and remove for change images:
 <x-attachment type="image" multiple="true" page="edit" name="galleries" label="تصاویر گالری" data="{{ $post->getMedia('galleries')->pluck('id') }}"></x-attachment>
-
+```
+```
 If we want to upload a video in create page:
 <x-attachment type="video" multiple="false" page="create" name="video" label="ویدیو"></x-attachment>
 
@@ -149,7 +159,8 @@ If we want to show uploaded video in edit page and remove for change video:
 
 If we want to show uploaded videos in edit page and remove for change videos:
 <x-attachment type="video" multiple="true" page="edit" name="videos" label="ویدیو‌ها" data="{{ $post->getMedia('videos')->pluck('id') }}"></x-attachment>
-
+```
+```
 If we want to upload a attachment file in create page:
 <x-attachment type="attachment" multiple="false" page="create" name="attachment" label="فایل ضمیمه"></x-attachment>
 
@@ -164,6 +175,77 @@ If we want to show uploaded attachment files in edit page and remove for change 
 
 Notice: We can use any attribute name in component.
 
+```
+```
+How to use a custom disk for upload, (e.g) a ftp disk or custom local disk:
+
+- FTP DISK:
+
+    1- create a disk in /config/filesystems.php
+
+        'disk_name' => [
+            'driver' => 'ftp',
+            'host' => env('FTP_HOST'),
+            'username' => env('FTP_USERNAME'),
+            'password' => env('FTP_PASSWORD'),
+    
+            // Optional FTP Settings...
+            'port' => 21,
+            'root' => '/public_html',
+            'protocol' => 'http'
+            // 'passive' => true,
+            // 'ssl' => true,
+            // 'timeout' => 30,
+        ],
+    
+    2- add this disk name to /config/mediable.php
+
+        'allowed_disks' => [
+            'public',
+            'private',
+            'disk_name'
+        ],
+
+    3- use in blade
+    
+        <x-attachment type="image" 
+                multiple="false" 
+                page="create" 
+                name="feature" 
+                label="تصویر شاخص"
+                disk="disk_name"
+        ></x-attachment>
+
+- LOCAL DISK:
+
+    1- create a disk in /config/filesystems.php
+    
+        'disk_name' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
+    2- add this disk name to /config/mediable.php
+    
+        'allowed_disks' => [
+            'public',
+            'private',
+            'disk_name'
+        ],
+
+    3- use in blade
+    
+        <x-attachment type="image" 
+                multiple="false" 
+                page="create" 
+                name="feature" 
+                label="تصویر شاخص"
+                disk="disk_name"
+        ></x-attachment>
+
+Notice: We can't use private disks for (image and video) types, but can use for attachmanet type.
 ```
 
 #### Check you're composer.json that installed [laravel/ui](https://github.com/laravel/ui) package
@@ -275,4 +357,11 @@ public function store(Request $request, Post $post)
     }
 }
 
+```
+
+#### How to get files and show in blades
+```
+$article->getMedia('featured_image')->count() > 0 ? $article->getMedia('featured_image')->first()->getUrl() : ''
+and for show variant
+$article->getMedia('featured_image')->count() > 0 ? $article->getMedia('featured_image')->first()->findVariant('thumbnail')->getUrl() : ''
 ```
