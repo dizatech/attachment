@@ -93,7 +93,7 @@ php artisan migrate
 If you use from xampp or wamp, it's installed by default but on linux maybe not installed.
 If you want to use imagick extension, read the document [here](https://laravel-mediable.readthedocs.io/en/latest/variants.html)
 
-#### List of Properties and Use components in blade pages (e.g)
+#### <g-emoji class="g-emoji" alias="book" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f4d6.png">📖</g-emoji> List of Properties and Use components in blade pages (e.g)
 - type="image | video | attachment"
 - multiple="false | true" 
 - page="create | edit"
