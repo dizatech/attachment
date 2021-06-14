@@ -180,7 +180,7 @@ If we want to show uploaded attachment files in edit page and remove for change 
 Notice: We can use any attribute name in component.
 
 ```
-```
+```php
 How to use a custom disk for upload, (e.g) a ftp disk or custom local disk:
 
 - FTP DISK:
