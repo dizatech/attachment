@@ -181,12 +181,14 @@ Notice: We can use any attribute name in component.
 
 ```
 ```php
-How to use a custom disk for upload, (e.g) a ftp disk or custom local disk:
+<?php
 
-- FTP DISK:
+// How to use a custom disk for upload, (e.g) a ftp disk or custom local disk:
 
-    1- create a disk in /config/filesystems.php
-        <?php
+// FTP DISK:
+
+    // 1- create a disk in /config/filesystems.php
+
         'disk_name' => [
             'driver' => 'ftp',
             'host' => env('FTP_HOST'),
@@ -201,24 +203,22 @@ How to use a custom disk for upload, (e.g) a ftp disk or custom local disk:
             // 'ssl' => true,
             // 'timeout' => 30,
         ],
-        ?php>
 
-    2- add this lines to .env file
+    // 2- add this lines to .env file
     
         FTP1_HOST=server1.domain.com
         FTP1_USERNAME=your_username
         FTP1_PASSWORD=your_password
     
-    3- add this disk name to /config/mediable.php
-        <?php
+    // 3- add this disk name to /config/mediable.php
+        
         'allowed_disks' => [
             'public',
             'private',
             'disk_name'
         ],
-        ?php>
 
-    4- use in blade
+    // 4- use in blade
         <html>
         <x-attachment type="image" 
                 multiple="false" 
@@ -228,28 +228,27 @@ How to use a custom disk for upload, (e.g) a ftp disk or custom local disk:
                 disk="disk_name"
         ></x-attachment>
         </html>
-- LOCAL DISK:
 
-    1- create a disk in /config/filesystems.php
-        <?php
+// LOCAL DISK:
+
+    // 1- create a disk in /config/filesystems.php
+
         'disk_name' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
-        ?php>
 
-    2- add this disk name to /config/mediable.php
-        <?php
+    // 2- add this disk name to /config/mediable.php
+
         'allowed_disks' => [
             'public',
             'private',
             'disk_name'
         ],
-        ?php>
 
-    3- use in blade
+    // 3- use in blade
         <html>
         <x-attachment type="image" 
                 multiple="false" 
@@ -260,7 +259,7 @@ How to use a custom disk for upload, (e.g) a ftp disk or custom local disk:
         ></x-attachment>
         </html>
 
-Notice: We can't use private disks for (image and video) types, but can use for attachmanet type.
+// Notice: We can't use private disks for (image and video) types, but can use for attachmanet type.
 ```
 
 #### Check you're composer.json that installed [laravel/ui](https://github.com/laravel/ui) package
