@@ -1,7 +1,9 @@
 # Laravel Attachment Package
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/dizatech/attachment.svg?style=flat-square)](https://packagist.org/packages/dizatech/attachment)
 [![GitHub issues](https://img.shields.io/github/issues/dizatech/attachment?style=flat-square)](https://github.com/dizatech/attachment/issues)
 [![GitHub stars](https://img.shields.io/github/stars/dizatech/attachment?style=flat-square)](https://github.com/dizatech/attachment/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/dizatech/attachment?style=flat-square)](https://github.com/dizatech/attachment/network)
+[![Total Downloads](https://img.shields.io/packagist/dt/dizatech/attachment.svg?style=flat-square)](https://packagist.org/packages/dizatech/attachment)
 [![GitHub license](https://img.shields.io/github/license/dizatech/attachment?style=flat-square)](https://github.com/dizatech/attachment/blob/master/LICENSE)
 
 
@@ -10,9 +12,9 @@ A laravel package for manage you're uploads (images and files), that use ajax an
 
 ## How to install and config [dizatech/attachment](https://github.com/dizatech/attachment) package?
 
-#### Installation
+#### <g-emoji class="g-emoji" alias="arrow_down" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2b07.png">⬇️</g-emoji> Installation
 
-```
+```bash
 PHP Package:
 composer require dizatech/attachment
 
@@ -22,7 +24,7 @@ npm i dizatech-attachment
 
 #### Publish Config file
 
-```
+```bash
 
 php artisan vendor:publish --provider="Plank\Mediable\MediableServiceProvider"
 php artisan vendor:publish --tag=dizatech_attachment
@@ -31,7 +33,8 @@ php artisan vendor:publish --tag=dizatech_attachment
 
 #### Create a private disk in config/filesystems.php
 
-```
+```php
+<?php
 
 'disks' => [
         'private' => [
@@ -45,7 +48,8 @@ php artisan vendor:publish --tag=dizatech_attachment
 
 #### Add private disk to config/mediable.php
 
-```
+```php
+<?php
 
 /*
 * Filesystems that can be used for media storage
@@ -61,7 +65,7 @@ php artisan vendor:publish --tag=dizatech_attachment
 
 #### Create a symbolic link from public disk
 
-```
+```php
 
 php artisan storage:link
 
@@ -69,7 +73,7 @@ php artisan storage:link
 
 #### Migrate tables, to add media and mediable tables to database
 
-```
+```php
 
 php artisan migrate
 
@@ -77,7 +81,7 @@ php artisan migrate
 
 #### Check you're blade file that exits csrf-token meta tag
 
-```
+```html
 
 <!-- CSRF Token -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -100,7 +104,7 @@ If you want to use imagick extension, read the document [here](https://laravel-m
 - required="required"  
 - tooltip-title="tooltip title" and tooltip-placement="bottom | top | left | right"
 - disk="public | private | ftp | ..."               
-```
+```html
 
 If we want to upload a image in create page:
 <x-attachment type="image" multiple="false" page="create" name="feature" label="تصویر شاخص"></x-attachment>
@@ -147,7 +151,7 @@ If we want to show uploaded image in edit page and remove for change image:
 If we want to show uploaded images in edit page and remove for change images:
 <x-attachment type="image" multiple="true" page="edit" name="galleries" label="تصاویر گالری" data="{{ $post->getMedia('galleries')->pluck('id') }}"></x-attachment>
 ```
-```
+```html
 If we want to upload a video in create page:
 <x-attachment type="video" multiple="false" page="create" name="video" label="ویدیو"></x-attachment>
 
@@ -160,7 +164,7 @@ If we want to show uploaded video in edit page and remove for change video:
 If we want to show uploaded videos in edit page and remove for change videos:
 <x-attachment type="video" multiple="true" page="edit" name="videos" label="ویدیو‌ها" data="{{ $post->getMedia('videos')->pluck('id') }}"></x-attachment>
 ```
-```
+```html
 If we want to upload a attachment file in create page:
 <x-attachment type="attachment" multiple="false" page="create" name="attachment" label="فایل ضمیمه"></x-attachment>
 
@@ -182,7 +186,7 @@ How to use a custom disk for upload, (e.g) a ftp disk or custom local disk:
 - FTP DISK:
 
     1- create a disk in /config/filesystems.php
-
+        <?php
         'disk_name' => [
             'driver' => 'ftp',
             'host' => env('FTP_HOST'),
@@ -197,6 +201,7 @@ How to use a custom disk for upload, (e.g) a ftp disk or custom local disk:
             // 'ssl' => true,
             // 'timeout' => 30,
         ],
+        ?php>
 
     2- add this lines to .env file
     
@@ -205,15 +210,16 @@ How to use a custom disk for upload, (e.g) a ftp disk or custom local disk:
         FTP1_PASSWORD=your_password
     
     3- add this disk name to /config/mediable.php
-
+        <?php
         'allowed_disks' => [
             'public',
             'private',
             'disk_name'
         ],
+        ?php>
 
     4- use in blade
-    
+        <html>
         <x-attachment type="image" 
                 multiple="false" 
                 page="create" 
@@ -221,28 +227,30 @@ How to use a custom disk for upload, (e.g) a ftp disk or custom local disk:
                 label="تصویر شاخص"
                 disk="disk_name"
         ></x-attachment>
-
+        </html>
 - LOCAL DISK:
 
     1- create a disk in /config/filesystems.php
-    
+        <?php
         'disk_name' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
+        ?php>
 
     2- add this disk name to /config/mediable.php
-    
+        <?php
         'allowed_disks' => [
             'public',
             'private',
             'disk_name'
         ],
+        ?php>
 
     3- use in blade
-    
+        <html>
         <x-attachment type="image" 
                 multiple="false" 
                 page="create" 
@@ -250,13 +258,14 @@ How to use a custom disk for upload, (e.g) a ftp disk or custom local disk:
                 label="تصویر شاخص"
                 disk="disk_name"
         ></x-attachment>
+        </html>
 
 Notice: We can't use private disks for (image and video) types, but can use for attachmanet type.
 ```
 
 #### Check you're composer.json that installed [laravel/ui](https://github.com/laravel/ui) package
 
-```
+```bash
 
 If not installed, run this commands:
     - composer require laravel/ui
@@ -282,7 +291,7 @@ npm run dev
 
 #### Check the config file to set you're custom configs
 
-```
+```php
 
 <?php
 
@@ -314,9 +323,10 @@ return [
 
 #### Use [plank/laravel-mediable](https://github.com/plank/laravel-mediable) package to attach files to Model
 
-```
+```php
+<?php
 
-Use Mediable trait in you're model:
+// Use Mediable trait in you're model:
 
 use Plank\Mediable\Mediable;
 class Post extends Model
@@ -326,9 +336,10 @@ class Post extends Model
 
 ```
 
-```
+```php
+<?php
 
-Atatch array of uploaded files to model:
+// Attach array of uploaded files to model:
 
 public function store(Request $request, Post $post)
 {
@@ -366,8 +377,10 @@ public function store(Request $request, Post $post)
 ```
 
 #### How to get files and show in blades
-```
-$article->getMedia('featured_image')->count() > 0 ? $article->getMedia('featured_image')->first()->getUrl() : ''
-and for show variant
-$article->getMedia('featured_image')->count() > 0 ? $article->getMedia('featured_image')->first()->findVariant('thumbnail')->getUrl() : ''
+```php
+<?php
+
+$article->getMedia('featured_image')->count() > 0 ? $article->getMedia('featured_image')->first()->getUrl() : '';
+// and for show variant
+$article->getMedia('featured_image')->count() > 0 ? $article->getMedia('featured_image')->first()->findVariant('thumbnail')->getUrl() : '';
 ```
