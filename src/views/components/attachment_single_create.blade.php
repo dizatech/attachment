@@ -29,6 +29,12 @@
                     </span>
                 @enderror
 
+                @error( $name . '.*' )
+                    <span class="invalid-feedback d-block" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+
                 <span class="invalid-feedback d-none" role="alert">
                     <strong></strong>
                 </span>
@@ -56,16 +62,18 @@
         @if( old($name) )
             @foreach( old($name) as $old_attachment )
                 @php $last_attachment = \Plank\Mediable\Media::query()->find($old_attachment); @endphp
-                <div class="attachment_file_upload mb-2">
-                    <div class="file_info">
-                        <a href="{{ \Illuminate\Support\Facades\URL::temporarySignedRoute('download.attachment', now()->addHours(6), ['path' => $last_attachment->getDiskPath()]) }}">
-                            <span class="file_name">{{ $last_attachment->basename }}</span>
-                        </a>
-                        <input class="uploaded_file_path" type="hidden" name="{{ $name . "[]" }}" value="{{ $last_attachment->getKey() }}">
-                    </div>
+                @if( !is_null( $last_attachment ) )
+                    <div class="attachment_file_upload mb-2">
+                        <div class="file_info">
+                            <a href="{{ \Illuminate\Support\Facades\URL::temporarySignedRoute('download.attachment', now()->addHours(6), ['path' => $last_attachment->getDiskPath()]) }}">
+                                <span class="file_name">{{ $last_attachment->basename }}</span>
+                            </a>
+                            <input class="uploaded_file_path" type="hidden" name="{{ $name . "[]" }}" value="{{ $last_attachment->getKey() }}">
+                        </div>
 
-                    <span class="delete_file"><i class="fa fa-times"></i></span>
-                </div>
+                        <span class="delete_file"><i class="fa fa-times"></i></span>
+                    </div>
+                @endif
             @endforeach
         @endif
     </div>

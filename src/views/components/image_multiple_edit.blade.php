@@ -32,6 +32,12 @@
                     </span>
                 @enderror
 
+                @error( $name . '.*' )
+                    <span class="invalid-feedback d-block" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+
                 <span class="invalid-feedback d-none" role="alert">
                     <strong></strong>
                 </span>
@@ -59,39 +65,41 @@
         @if( old( $name, $data) )
             @foreach( old( $name, $data) as $old_image )
                 @php $last_image = \Plank\Mediable\Media::query()->find($old_image); @endphp
-                <div class="gallery_file_upload mb-2">
-                    <div class="file_info">
-                        @if(in_array(config('filesystems.disks.' . $last_image->disk . '.driver'), ['ftp', 's3', 'sftp']))
-                            @php
-                                $file_url = config('filesystems.disks.' . $last_image->disk . '.protocol')  . '://' . config('filesystems.disks.' . $last_image->disk . '.host') . '/' . $last_image->getDiskPath();
-                                $variantMedia = [];
-                                foreach(config('dizatech_attachment.image_variant_list') as $variant) {
-                                    $variantMedia[] = \Plank\Mediable\Facades\ImageManipulator::createImageVariant($last_image, $variant);
-                                }
-                                $thumbnail = config('filesystems.disks.' . $last_image->disk . '.protocol')  . '://' . config('filesystems.disks.' . $last_image->disk . '.host') . '/' . $variantMedia[0]->getDiskPath();
-                            @endphp
-                        @else
-                            @php
-                                $file_url = $last_image->getUrl();
-                                $thumbnail = $last_image->findVariant('thumbnail')->getUrl();
-                            @endphp
-                        @endif
-                        <a class="uploaded_file_thumbnail" data-lity target="_blank" href="{{ $file_url }}">
-                            <img src="{{ $thumbnail }}" alt="img_{{ $last_image->filename }}">
-                        </a>
-                        <span class="file_name">{{ $last_image->basename }}</span>
-                        <input class="uploaded_file_path" type="hidden" name="{{ $name . "[]" }}" value="{{ $last_image->getKey() }}">
-                    </div>
-                    <div class="file_caption rtl my-1">
-                        <div class="row">
-                            <div class="col">
-                                <label>عنوان</label>
-                                <input type="text" class="form-control" name="{{ $name . "_caption[]" }}" value="{{ $last_image->caption }}">
+                @if( !is_null( $last_image ) )
+                    <div class="gallery_file_upload mb-2">
+                        <div class="file_info">
+                            @if(in_array(config('filesystems.disks.' . $last_image->disk . '.driver'), ['ftp', 's3', 'sftp']))
+                                @php
+                                    $file_url = config('filesystems.disks.' . $last_image->disk . '.protocol')  . '://' . config('filesystems.disks.' . $last_image->disk . '.host') . '/' . $last_image->getDiskPath();
+                                    $variantMedia = [];
+                                    foreach(config('dizatech_attachment.image_variant_list') as $variant) {
+                                        $variantMedia[] = \Plank\Mediable\Facades\ImageManipulator::createImageVariant($last_image, $variant);
+                                    }
+                                    $thumbnail = config('filesystems.disks.' . $last_image->disk . '.protocol')  . '://' . config('filesystems.disks.' . $last_image->disk . '.host') . '/' . $variantMedia[0]->getDiskPath();
+                                @endphp
+                            @else
+                                @php
+                                    $file_url = $last_image->getUrl();
+                                    $thumbnail = $last_image->findVariant('thumbnail')->getUrl();
+                                @endphp
+                            @endif
+                            <a class="uploaded_file_thumbnail" data-lity target="_blank" href="{{ $file_url }}">
+                                <img src="{{ $thumbnail }}" alt="img_{{ $last_image->filename }}">
+                            </a>
+                            <span class="file_name">{{ $last_image->basename }}</span>
+                            <input class="uploaded_file_path" type="hidden" name="{{ $name . "[]" }}" value="{{ $last_image->getKey() }}">
+                        </div>
+                        <div class="file_caption rtl my-1">
+                            <div class="row">
+                                <div class="col">
+                                    <label>عنوان</label>
+                                    <input type="text" class="form-control" name="{{ $name . "_caption[]" }}" value="{{ $last_image->caption }}">
+                                </div>
                             </div>
                         </div>
+                        <span class="delete_file"><i class="fa fa-times"></i></span>
                     </div>
-                    <span class="delete_file"><i class="fa fa-times"></i></span>
-                </div>
+                @endif
             @endforeach
         @endif
     </div>

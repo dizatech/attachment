@@ -29,6 +29,12 @@
                     </span>
                 @enderror
 
+                @error( $name . '.*' )
+                    <span class="invalid-feedback d-block" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+
                 <span class="invalid-feedback d-none" role="alert">
                     <strong></strong>
                 </span>
@@ -56,28 +62,30 @@
         @if( old($name, $data) )
             @foreach( old($name, $data) as $old_attachment )
                 @php $last_attachment = \Plank\Mediable\Media::query()->find($old_attachment); @endphp
-                <div class="attachment_file_upload mb-2">
-                    <div class="file_info">
-                        @if(in_array(config('filesystems.disks.' . $last_attachment->disk . '.driver'), ['ftp', 's3', 'sftp']))
-                            @php
-                                $file_url = config('filesystems.disks.' . $last_attachment->disk . '.protocol')  . '://' . config('filesystems.disks.' . $last_attachment->disk . '.host') . '/' .  $last_attachment->getDiskPath();
-                            @endphp
-                        @elseif(config('filesystems.disks.' . $last_attachment->disk . '.driver') == 'local' && config('filesystems.disks.' . $last_attachment->disk . '.visibility') == 'private')
-                            @php
-                                $file_url = \Illuminate\Support\Facades\URL::temporarySignedRoute('download.attachment', now()->addHours(6), ['path' => $last_attachment->getDiskPath()]);
-                            @endphp
-                        @else
-                            @php
-                                $file_url = $last_attachment->getUrl();
-                            @endphp
-                        @endif
-                        <a href="{{ $file_url }}">
-                            <span class="file_name">{{ $last_attachment->basename }}</span>
-                        </a>
-                        <input class="uploaded_file_path" type="hidden" name="{{ $name . "[]" }}" value="{{ $last_attachment->getKey() }}">
+                @if( !is_null( $last_attachment ) )
+                    <div class="attachment_file_upload mb-2">
+                        <div class="file_info">
+                            @if(in_array(config('filesystems.disks.' . $last_attachment->disk . '.driver'), ['ftp', 's3', 'sftp']))
+                                @php
+                                    $file_url = config('filesystems.disks.' . $last_attachment->disk . '.protocol')  . '://' . config('filesystems.disks.' . $last_attachment->disk . '.host') . '/' .  $last_attachment->getDiskPath();
+                                @endphp
+                            @elseif(config('filesystems.disks.' . $last_attachment->disk . '.driver') == 'local' && config('filesystems.disks.' . $last_attachment->disk . '.visibility') == 'private')
+                                @php
+                                    $file_url = \Illuminate\Support\Facades\URL::temporarySignedRoute('download.attachment', now()->addHours(6), ['path' => $last_attachment->getDiskPath()]);
+                                @endphp
+                            @else
+                                @php
+                                    $file_url = $last_attachment->getUrl();
+                                @endphp
+                            @endif
+                            <a href="{{ $file_url }}">
+                                <span class="file_name">{{ $last_attachment->basename }}</span>
+                            </a>
+                            <input class="uploaded_file_path" type="hidden" name="{{ $name . "[]" }}" value="{{ $last_attachment->getKey() }}">
+                        </div>
+                        <span class="delete_file"><i class="fa fa-times"></i></span>
                     </div>
-                    <span class="delete_file"><i class="fa fa-times"></i></span>
-                </div>
+                @endif
             @endforeach
         @endif
     </div>
