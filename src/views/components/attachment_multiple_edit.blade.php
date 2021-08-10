@@ -61,7 +61,10 @@
                     <div class="file_info">
                         @if(in_array(config('filesystems.disks.' . $last_attachment->disk . '.driver'), ['ftp', 's3', 'sftp']))
                             @php
-                                $file_url = config('filesystems.disks.' . $last_attachment->disk . '.protocol')  . '://' . config('filesystems.disks.' . $last_attachment->disk . '.host') . '/' .  $last_attachment->getDiskPath();
+                                $file_url = config('filesystems.disks.' . $last_attachment->disk . '.protocol')  . '://' .
+                                    config('filesystems.disks.' . $last_attachment->disk . '.host') . '/' .
+                                    config('filesystems.disks.' . $last_attachment->disk . '.base_url') .
+                                    $last_attachment->getDiskPath();
                             @endphp
                         @elseif(config('filesystems.disks.' . $last_attachment->disk . '.driver') == 'local' && config('filesystems.disks.' . $last_attachment->disk . '.visibility') == 'private')
                             @php
@@ -72,7 +75,7 @@
                                 $file_url = $last_attachment->getUrl();
                             @endphp
                         @endif
-                        <a href="{{ $file_url }}">
+                        <a target="_blank" href="{{ $file_url }}">
                             <span class="file_name">{{ $last_attachment->basename }}</span>
                         </a>
                         <input class="uploaded_file_path" type="hidden" name="{{ $name . "[]" }}" value="{{ $last_attachment->getKey() }}">
