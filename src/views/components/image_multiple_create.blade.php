@@ -1,7 +1,7 @@
 <div class="row gallery">
-    <div class="col-md-12">
+    <div class="col-md-12 mb-3">
         <div class="form-group">
-            <label for="">
+            <label for="" class="form-label">
                 @if($required == 'required')
                     <strong class="text-danger">*</strong>
                 @endif
