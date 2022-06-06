@@ -89,14 +89,14 @@ class AjaxUploadController extends Controller
         $response->file_name = $media->basename;
 
         if( $request->file_type == 'image' ) {
-            $response->file_url = config('filesystems.disks.' . $request->disk . '.protocol')  . '://' . config('filesystems.disks.' . $request->disk . '.host') . '/' . $media->getDiskPath();
+            $response->file_url = config('filesystems.disks.' . $request->disk . '.protocol')  . '://' . config('filesystems.disks.' . $request->disk . '.host') . '/' . config('filesystems.disks.' . $request->disk . '.base_url') . $media->getDiskPath();
             $variantMedia = [];
             foreach(config('dizatech_attachment.image_variant_list') as $variant) {
                 $variantMedia[] = ImageManipulator::createImageVariant($media, $variant);
             }
-            $response->thumbnail = config('filesystems.disks.' . $request->disk . '.protocol')  . '://' . config('filesystems.disks.' . $request->disk . '.host') . '/' . $variantMedia[0]->getDiskPath();
+            $response->thumbnail = config('filesystems.disks.' . $request->disk . '.protocol')  . '://' . config('filesystems.disks.' . $request->disk . '.host') . '/' . config('filesystems.disks.' . $request->disk . '.base_url') . $variantMedia[0]->getDiskPath();
         } else {
-            $response->file_url = config('filesystems.disks.' . $request->disk . '.protocol')  . '://' . config('filesystems.disks.' . $request->disk . '.host') . '/' .  $media->getDiskPath();
+            $response->file_url = config('filesystems.disks.' . $request->disk . '.protocol')  . '://' . config('filesystems.disks.' . $request->disk . '.host') . '/' .  config('filesystems.disks.' . $request->disk . '.base_url') . $media->getDiskPath();
         }
 
         return response()->json( $response );
