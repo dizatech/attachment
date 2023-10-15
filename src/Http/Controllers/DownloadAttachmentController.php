@@ -16,6 +16,7 @@ class DownloadAttachmentController extends Controller
         $type_disk = [
             'result'        => 'mahamax_files1',
             'invoice'       => 'private',
+            'attachment'    => 'private',
         ];
         $disk = $type_disk[$type] ?? 'mahamax_files_1';
         try {
